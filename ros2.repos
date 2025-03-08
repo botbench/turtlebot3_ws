@@ -14,4 +14,4 @@ repositories:
   turtlebot3_simulations:
     type: git
     url: https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
-    version: humble
+    version: feature-gazebo-sim-migration 
