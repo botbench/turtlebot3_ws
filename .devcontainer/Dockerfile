@@ -1,9 +1,11 @@
 FROM ros:humble
 
 # Set up environment variables
+# Set the model to the robot you have, default is "burger"
 ENV DEBIAN_FRONTEND=noninteractive \
     ROS_DISTRO=humble \
-    ROS_WS=/workspace
+    ROS_WS=/workspace \
+    TURTLEBOT3_MODEL=burger
 
 # Create non-root user "rosdev" with matching UID and GID
 ARG USERNAME=rosdev
@@ -25,14 +27,17 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     git \
     bash-completion \
     sudo \
+    apt-file \
+    less \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up the rosdev user's environment. Remove the sudoers line if you do not want to be able to install
 # additional packages as root.
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USERNAME}/.bashrc && \
     echo "source ${ROS_WS}/install/setup.bash" >> /home/${USERNAME}/.bashrc && \
+    echo "export TURTLEBOT3_MODEL=${TURTLEBOT3_MODEL}" >> ~/.bashrc && \
     mkdir -p ${ROS_WS} && chown -R ${USERNAME}:${USERNAME} ${ROS_WS} && \
-    echo "rosdev ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/dpkg, /usr/bin/apt-get, /usr/bin/apt-cache" | sudo tee /etc/sudoers.d/rosdev && \
+    echo "rosdev ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/apt-file, /usr/bin/dpkg, /usr/bin/apt-get, /usr/bin/apt-cache" | sudo tee /etc/sudoers.d/rosdev && \
     chmod 0440 /etc/sudoers.d/rosdev 
 
 USER ${USERNAME}

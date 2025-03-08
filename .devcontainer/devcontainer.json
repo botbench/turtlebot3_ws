@@ -12,9 +12,6 @@
     "source=${env:SSH_AUTH_SOCK},target=/ssh-agent,type=bind"
   ],
   "containerEnv": {
-    // "DISPLAY": "${localEnv:DISPLAY}",
-    // "QT_X11_NO_MITSHM": "1",
-    // "ROS_DOMAIN_ID": "42",
     "ROS_WS": "/workspace",
     "SSH_AUTH_SOCK": "/ssh-agent"
   },
@@ -23,7 +20,7 @@
       "extensions": [
         "ms-vscode.cpptools",
         "ms-iot.vscode-ros",
-        "twxs.cmake",
+        "ms-vscode.cmake-tools",
         "ms-python.python",
         "ms-azuretools.vscode-docker",
         "ms-python.python"
@@ -35,6 +32,6 @@
   },
   "workspaceMount": "source=${env:HOME}/turtlebot3_ws,target=/workspace,type=bind",
   "workspaceFolder": "/workspace",
-  "postCreateCommand": "mkdir -p src && vcs import src < ros2.repos && colcon build"
+  "postCreateCommand": "test -d src || (mkdir -p src && vcs import src < ros2.repos && colcon build)"
 }
 
