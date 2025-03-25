@@ -15,3 +15,7 @@ repositories:
     type: git
     url: https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
     version: feature-gazebo-sim-migration 
+  ld08_drive:
+    type: git
+    url: https://github.com/ROBOTIS-GIT/ld08_driver.git
+    version: humble 

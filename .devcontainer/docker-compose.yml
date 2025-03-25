@@ -17,4 +17,5 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ${HOME}/.Xauthority:/home/rosdev/.Xauthority
       - ${HOME}/turtlebot3_ws:/workspace
+      - /dev/dri:/dev/dri
 
